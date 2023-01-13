@@ -16,6 +16,18 @@ def data_collection(url: str, row_count: int = 15):
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
 
+        for i in range(row_count):
+            json_parse = json.loads(requests.get(url).text)
+            url = "https:" + json_parse["PreviousURL"]
+            date = str(json_parse["Date"])[0:-15]
+            value = str(json_parse["Valute"]["USD"]["Value"])
+
+            writer.writerow(
+                {
+                    "Date": date,
+                    "Value": value
+                }
+            )
 
 
 if __name__ == '__main__':
