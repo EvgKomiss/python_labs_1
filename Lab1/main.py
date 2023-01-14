@@ -33,4 +33,4 @@ def data_collection(url: str, row_count: int = 15):
 if __name__ == '__main__':
     date = str(datetime.today().strftime('%Y/%m/%d'))
     cur_url = "https://www.cbr-xml-daily.ru/archive/" + date + "/daily_json.js"
-    data_collection(url=cur_url)
+    data_collection(url=cur_url, row_count=150)
