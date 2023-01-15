@@ -33,5 +33,13 @@ def second_type(date: datetime.date = None) -> float or None:
     return result
 
 
+def my_next(counter: int, file_name: str = "20220610_20221231.csv") -> tuple:
+    data = get_data(file_name)
+    date = data["Date"].tolist()
+    value = data["Value"].tolist()
+    return date[-counter], value[-counter]
+
+
 if __name__ == '__main__':
-    second_type()
+    a = my_next()
+    print(next(a))
