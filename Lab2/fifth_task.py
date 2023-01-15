@@ -2,6 +2,10 @@ from fourth_task import my_next
 
 
 class FileIterator:
+    """
+    A simple iterator example class. Iterates a file for set amount of times.
+
+    """
     def __init__(self, limit):
         self.limit = limit
         self.counter = 0

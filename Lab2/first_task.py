@@ -3,7 +3,12 @@ import csv
 from utils import get_data
 
 
-def first_task(df: pandas.DataFrame):
+def first_task(df: pandas.DataFrame) -> None:
+    """
+    Splices given dataframe into two files. One with dates, and one with values.
+
+    :param df: Dataframe to be spliced
+    """
     date = df["Date"].tolist()
     value = df["Value"].tolist()
 

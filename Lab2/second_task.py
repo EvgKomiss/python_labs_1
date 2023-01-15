@@ -4,7 +4,12 @@ from utils import file_writer, get_data
 from datetime import datetime
 
 
-def second_task(df: pandas.DataFrame):
+def second_task(df: pandas.DataFrame) -> None:
+    """
+    Splices a given dataframe into N files, categorized by years.
+
+    :param df: Dataframe to be spliced
+    """
     date = df["Date"].tolist()
     value = df["Value"].tolist()
 

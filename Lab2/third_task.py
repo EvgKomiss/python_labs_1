@@ -3,7 +3,12 @@ from datetime import datetime, timedelta
 from utils import file_writer, get_data
 
 
-def third_task(df: pandas.DataFrame):
+def third_task(df: pandas.DataFrame) -> None:
+    """
+    Splices a given dataframe into N files, categorized by weeks.
+
+    :param df: Dataframe to be spliced
+    """
     date = df["Date"].tolist()
     value = df["Value"].tolist()
 

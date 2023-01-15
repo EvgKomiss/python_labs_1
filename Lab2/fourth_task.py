@@ -4,6 +4,12 @@ import os
 
 
 def first_type(date: datetime.date = None) -> float or None:
+    """
+    Searches for given date and returns value for it.
+
+    :param date: Date to search
+    :return: Value for given date
+    """
     dates = get_data("X.csv")["Date"].tolist()
     try:
         index = dates.index(str(date))
@@ -13,6 +19,12 @@ def first_type(date: datetime.date = None) -> float or None:
 
 
 def second_type(date: datetime.date = None) -> float or None:
+    """
+    Searches for given date and returns value for it.
+
+    :param date: Date to search
+    :return: Value for given date
+    """
     path = None
     for file in os.listdir():
         if file.endswith(".csv"):
@@ -34,6 +46,13 @@ def second_type(date: datetime.date = None) -> float or None:
 
 
 def my_next(counter: int, file_name: str = "20220610_20221231.csv") -> tuple:
+    """
+    Returns next available value in given file.
+
+    :param counter: Current row in given file
+    :param file_name: File to iterate
+    :return: Current date and value
+    """
     data = get_data(file_name)
     date = data["Date"].tolist()
     value = data["Value"].tolist()
@@ -41,5 +60,4 @@ def my_next(counter: int, file_name: str = "20220610_20221231.csv") -> tuple:
 
 
 if __name__ == '__main__':
-    a = my_next()
-    print(next(a))
+    second_type()
