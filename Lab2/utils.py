@@ -1,9 +1,15 @@
 import csv
+import pandas
 
 
 def file_writer(date: list):
     min_date = str(min(date, key=lambda t: t[0])[0]).replace('-', '')
     max_date = str(max(date, key=lambda t: t[0])[0]).replace('-', '')
-    with open(f"{min_date}_"f"{max_date}", "w", newline='') as f:
+    with open(f"{min_date}_{max_date}.csv", "w", newline='') as f:
         writer = csv.writer(f)
+        writer.writerow({"Date", "Value"})
         writer.writerows(date)
+
+
+def get_data(path: str = "../Lab1/dataset.csv"):
+    return pandas.read_csv(path)

@@ -1,7 +1,7 @@
 import pandas
 import datetime
-from utils import file_writer
-from datetime import datetime, timedelta
+from utils import file_writer, get_data
+from datetime import datetime
 
 
 def second_task(df: pandas.DataFrame):
@@ -16,3 +16,7 @@ def second_task(df: pandas.DataFrame):
         date_copy[row_date.year].append((row_date, value[i]))
     for i in date_copy:
         file_writer(date_copy[i])
+
+
+if __name__ == '__main__':
+    second_task(get_data())

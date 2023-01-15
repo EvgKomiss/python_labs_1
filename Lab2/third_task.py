@@ -1,6 +1,6 @@
 import pandas
 from datetime import datetime, timedelta
-from utils import file_writer
+from utils import file_writer, get_data
 
 
 def third_task(df: pandas.DataFrame):
@@ -25,3 +25,7 @@ def third_task(df: pandas.DataFrame):
         if day_of_the_week == 0:
             file_writer(tmp_list)
             tmp_list = []
+
+
+if __name__ == '__main__':
+    third_task(get_data())
