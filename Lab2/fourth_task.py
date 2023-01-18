@@ -94,4 +94,4 @@ def my_next(counter: int, file_name: str = "20220610_20221231.csv") -> tuple:
 
 
 if __name__ == '__main__':
-    print(second_type(datetime(2022, 12, 14).date(), ''))
+    pass

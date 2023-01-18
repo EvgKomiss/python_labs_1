@@ -1,12 +1,12 @@
-from PyQt6.QtCore import QSize
 from PyQt6.QtWidgets import QMainWindow, QWidget, QApplication, QPushButton, QFileDialog, QLineEdit, QLabel, \
-    QVBoxLayout, QHBoxLayout, QComboBox
+    QVBoxLayout, QComboBox
 from datetime import datetime
 from Lab2.first_task import first_task
 from Lab2.second_task import second_task
 from Lab2.third_task import third_task
 from Lab2.fourth_task import first_type, second_type, default_type
 from Lab2.utils import get_data
+from shutil import copyfile
 
 
 class Window(QMainWindow):
@@ -28,7 +28,7 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("My App")
+        self.setWindowTitle("Lab 3")
 
         layout = QVBoxLayout()
 
@@ -90,7 +90,14 @@ class Window(QMainWindow):
                              self.folder_path_for_new_dataset[self.state])
 
     def copy_func(self):
-        pass
+        self.folder_path_for_annotation = \
+            QFileDialog.getExistingDirectory(self, "Select annotation folder")
+        print(self.folder_path_for_annotation)
+        try:
+            copyfile(self.folder_path_for_dataset + "/dataset.csv",
+                     self.folder_path_for_annotation + "/dataset_copy.csv")
+        except FileNotFoundError:
+            self.value.setText("Error occurred. Bad path")
 
     def default_folder_func(self):
         self.folder_path_for_dataset = QFileDialog.getExistingDirectory(self, "Select default dataset folder")
