@@ -1,13 +1,14 @@
 import pandas
 from datetime import datetime, timedelta
-from utils import file_writer, get_data
+from Lab2.utils import file_writer, get_data
 
 
-def third_task(df: pandas.DataFrame) -> None:
+def third_task(df: pandas.DataFrame, path: str) -> None:
     """
     Splices a given dataframe into N files, categorized by weeks.
 
     :param df: Dataframe to be spliced
+    :param path: Path to the new files
     """
     date = df["Date"].tolist()
     value = df["Value"].tolist()
@@ -21,16 +22,16 @@ def third_task(df: pandas.DataFrame) -> None:
             weekday_checker = day_of_the_week_buffer - day_of_the_week
             date_checker = tmp_list[-1][0] - row_date
             if weekday_checker <= 0 or date_checker >= timedelta(days=7):
-                file_writer(tmp_list)
+                file_writer(tmp_list, path)
                 tmp_list = [(row_date, value[i])]
             else:
                 tmp_list.append((row_date, value[i]))
         else:
             tmp_list.append((row_date, value[i]))
         if day_of_the_week == 0:
-            file_writer(tmp_list)
+            file_writer(tmp_list, path)
             tmp_list = []
 
 
 if __name__ == '__main__':
-    third_task(get_data())
+    third_task(get_data(), "./test")

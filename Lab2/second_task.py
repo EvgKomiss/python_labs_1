@@ -1,14 +1,15 @@
 import pandas
 import datetime
-from utils import file_writer, get_data
+from Lab2.utils import file_writer, get_data
 from datetime import datetime
 
 
-def second_task(df: pandas.DataFrame) -> None:
+def second_task(df: pandas.DataFrame, path: str) -> None:
     """
     Splices a given dataframe into N files, categorized by years.
 
     :param df: Dataframe to be spliced
+    :param path: Path to the new files
     """
     date = df["Date"].tolist()
     value = df["Value"].tolist()
@@ -20,8 +21,8 @@ def second_task(df: pandas.DataFrame) -> None:
             date_copy[row_date.year] = []
         date_copy[row_date.year].append((row_date, value[i]))
     for i in date_copy:
-        file_writer(date_copy[i])
+        file_writer(date_copy[i], path)
 
 
 if __name__ == '__main__':
-    second_task(get_data())
+    second_task(get_data(), "./test")

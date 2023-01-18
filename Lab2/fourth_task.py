@@ -1,32 +1,34 @@
 from datetime import datetime
-from utils import get_data
+from Lab2.utils import get_data
 import os
 
 
-def first_type(date: datetime.date = None) -> float or None:
+def first_type(date: datetime.date = None, path: str = None) -> float or None:
     """
     Searches for given date and returns value for it.
 
     :param date: Date to search
+    :param path: Path to files
     :return: Value for given date
     """
-    dates = get_data("X.csv")["Date"].tolist()
+    dates = get_data(path + "/X.csv")["Date"].tolist()
     try:
         index = dates.index(str(date))
     except ValueError:
         return None
-    return get_data("Y.csv")["Value"].tolist()[index]
+    return get_data(path + "/Y.csv")["Value"].tolist()[index]
 
 
-def second_type(date: datetime.date = None) -> float or None:
+def second_type(date: datetime.date = None, path: str = None) -> float or None:
     """
     Searches for given date and returns value for it.
 
     :param date: Date to search
+    :param path: Path to files
     :return: Value for given date
     """
     path = None
-    for file in os.listdir():
+    for file in os.listdir(path):
         if file.endswith(".csv"):
             tmp = file
             potential_file = file.replace(".csv", "").split("_")
