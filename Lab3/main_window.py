@@ -10,7 +10,10 @@ from shutil import copyfile
 
 
 class Window(QMainWindow):
+    """
+    A simple GUI for Lab 2.
 
+    """
     search_string: str = ''
     folder_path_for_dataset: str = '../Lab1'
     folder_path_for_new_dataset: list = ['../Lab2', '../Lab2', '../Lab2']
@@ -18,7 +21,12 @@ class Window(QMainWindow):
     state: int = 0
 
     @property
-    def raw_date(self):
+    def raw_date(self) -> datetime.date:
+        """
+        Transforms self.search_string string into date format.
+
+        :return: Calculated date
+        """
         try:
             date = datetime.strptime(self.search_string, '%Y-%m-%d').date()
         except ValueError:
@@ -66,13 +74,27 @@ class Window(QMainWindow):
         self.setCentralWidget(container)
         self.show()
 
-    def index_changed(self, i):
+    def index_changed(self, i: int) -> None:
+        """
+        Changes self.state to current ComboBox selected row number.
+
+        :param i: ComboBox selected row number
+        """
         self.state = i
 
-    def text_changed(self, s):
+    def text_changed(self, s) -> None:
+        """
+        Changes self.search_string to current string in TextBox.
+
+        :param s: TextBox current text
+        """
         self.search_string = s
 
-    def search_func(self):
+    def search_func(self) -> None:
+        """
+        Searches for current date value in currently selected dataset type.
+
+        """
         if self.state == 0:
             result = first_type(self.raw_date, self.folder_path_for_new_dataset[self.state])
         elif self.state == 1 or self.state == 2:
@@ -82,14 +104,23 @@ class Window(QMainWindow):
             result = default_type(self.raw_date, self.folder_path_for_dataset)
         self.value.setText(str(result))
 
-    def splice_func(self):
+    def splice_func(self) -> None:
+        """
+        Splices current dataset according to current type of dataset selected. Creates new dataset in
+        selected directory.
+
+        """
         self.folder_func()
         if self.state < 3:
             temp = [first_task, second_task, third_task]
             temp[self.state](get_data(self.folder_path_for_dataset + "/dataset.csv"),
                              self.folder_path_for_new_dataset[self.state])
 
-    def copy_func(self):
+    def copy_func(self) -> None:
+        """
+        Creates a copy of default dataset into selected directory.
+
+        """
         self.folder_path_for_annotation = \
             QFileDialog.getExistingDirectory(self, "Select annotation folder")
         print(self.folder_path_for_annotation)
@@ -99,13 +130,22 @@ class Window(QMainWindow):
         except FileNotFoundError:
             self.value.setText("Error occurred. Bad path")
 
-    def default_folder_func(self):
+    def default_folder_func(self) -> None:
+        """
+        Sets self.folder_path_for_dataset value to selected path (string).
+
+        """
         self.folder_path_for_dataset = QFileDialog.getExistingDirectory(self, "Select default dataset folder")
         print(self.folder_path_for_dataset)
         if len(self.folder_path_for_dataset) == 0:
             self.folder_path_for_dataset = '../Lab1'
 
     def folder_func(self):
+        """
+        Sets self.folder_path_for_new_dataset value for currently selected dataset type
+        to selected path (string).
+
+        """
         if self.state < 3:
             self.folder_path_for_new_dataset[self.state] = \
                 QFileDialog.getExistingDirectory(self, "Select folder for new files")
