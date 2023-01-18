@@ -12,8 +12,8 @@ from Lab2.utils import get_data
 class Window(QMainWindow):
 
     search_string: str = ''
-    folder_path_for_dataset: list = ['', '', '']
-    folder_path_for_new_dataset: str = ''
+    folder_path_for_dataset: str = '../Lab1'
+    folder_path_for_new_dataset: list = ['../Lab2', '../Lab2', '../Lab2']
     folder_path_for_annotation: str = ''
     state: int = 0
 
@@ -38,23 +38,27 @@ class Window(QMainWindow):
 
         layout.addWidget(widget)
 
+        self.value = QLabel()
+        self.value.setText("Search result will be here")
+        layout.addWidget(self.value)
+
         date_input = QLineEdit()
         date_input.setInputMask('0000-00-00;_')
         date_input.setMaxLength(10)
         date_input.textChanged.connect(self.text_changed)
         layout.addWidget(date_input)
 
-        value = QLabel()
-        value.setText("Search result will be here")
-        layout.addWidget(value)
-
         default_folder = QPushButton("Set default dataset folder")
+        default_folder.clicked.connect(self.default_folder_func)
         layout.addWidget(default_folder)
         annotation = QPushButton("Create dataset annotation")
+        annotation.clicked.connect(self.copy_func)
         layout.addWidget(annotation)
         splice = QPushButton("Splice default dataset")
+        splice.clicked.connect(self.splice_func)
         layout.addWidget(splice)
         search = QPushButton("Get data")
+        search.clicked.connect(self.search_func)
         layout.addWidget(search)
 
         container = QWidget()
@@ -64,12 +68,36 @@ class Window(QMainWindow):
 
     def index_changed(self, i):
         self.state = i
-        print(self.state)
 
     def text_changed(self, s):
-        print("Text changed...")
-        print(s)
         self.search_string = s
+
+    def search_func(self):
+        pass
+
+    def splice_func(self):
+        self.folder_func()
+        if self.state < 3:
+            temp = [first_task, second_task, third_task]
+            temp[self.state](get_data(self.folder_path_for_dataset + "/dataset.csv"),
+                             self.folder_path_for_new_dataset[self.state])
+
+    def copy_func(self):
+        pass
+
+    def default_folder_func(self):
+        self.folder_path_for_dataset = QFileDialog.getExistingDirectory(self, "Select default dataset folder")
+        print(self.folder_path_for_dataset)
+        if len(self.folder_path_for_dataset) == 0:
+            self.folder_path_for_dataset = '../Lab1'
+
+    def folder_func(self):
+        if self.state < 3:
+            self.folder_path_for_new_dataset[self.state] = \
+                QFileDialog.getExistingDirectory(self, "Select folder for new files")
+            if len(self.folder_path_for_new_dataset[self.state]) == 0:
+                self.folder_path_for_new_dataset[self.state] = './'
+        print(self.folder_path_for_new_dataset)
 
 
 if __name__ == '__main__':
