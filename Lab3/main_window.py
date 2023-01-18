@@ -5,7 +5,7 @@ from datetime import datetime
 from Lab2.first_task import first_task
 from Lab2.second_task import second_task
 from Lab2.third_task import third_task
-from Lab2.fourth_task import first_type, second_type
+from Lab2.fourth_task import first_type, second_type, default_type
 from Lab2.utils import get_data
 
 
@@ -73,7 +73,14 @@ class Window(QMainWindow):
         self.search_string = s
 
     def search_func(self):
-        pass
+        if self.state == 0:
+            result = first_type(self.raw_date, self.folder_path_for_new_dataset[self.state])
+        elif self.state == 1 or self.state == 2:
+            print(self.raw_date, self.folder_path_for_new_dataset[self.state], self.state)
+            result = second_type(self.raw_date, self.folder_path_for_new_dataset[self.state])
+        else:
+            result = default_type(self.raw_date, self.folder_path_for_dataset)
+        self.value.setText(str(result))
 
     def splice_func(self):
         self.folder_func()
