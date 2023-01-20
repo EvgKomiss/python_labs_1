@@ -24,5 +24,12 @@ def create_value_deviation_columns(df: pandas.DataFrame) -> pandas.DataFrame:
     return df
 
 
+def write_statistics(df: pandas.DataFrame) -> None:
+    print(df.agg({'value': ['min', 'max', 'median', 'mean'],
+                  'median_dev': ['min', 'max', 'median', 'mean'],
+                  'mean_dev': ['min', 'max', 'median', 'mean']}))
+
+
 if __name__ == '__main__':
-    print(create_value_deviation_columns(rename_columns(read_data())))
+    new_df = create_value_deviation_columns(rename_columns(read_data()))
+    write_statistics(new_df)
