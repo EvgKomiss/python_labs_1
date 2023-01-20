@@ -1,6 +1,8 @@
 from datetime import datetime
 import pandas
 import matplotlib
+import matplotlib.pyplot as plt
+matplotlib.use('TkAgg')
 
 
 def read_data(path: str = '../Lab1/dataset.csv') -> pandas.DataFrame:
@@ -43,9 +45,18 @@ def group_by_month(df: pandas.DataFrame) -> pandas.DataFrame:
     return df.groupby(df['date'].dt.month)['value'].mean()
 
 
+def draw_global_chart(df: pandas.DataFrame) -> None:
+    plt.figure('Global value chart')
+    plt.plot(df['date'], df['mean_dev'], color="green")
+    plt.xlabel('Date')
+    plt.ylabel('Value')
+    plt.show()
+
+
 if __name__ == '__main__':
     new_df = create_value_deviation_columns(rename_columns(read_data()))
     write_statistics(new_df)
     print(filter_by_deviation(new_df, 2.37))
     print(filter_by_date(new_df, datetime(2022, 10, 12), datetime(2022, 10, 14)))
     print(group_by_month(new_df))
+    draw_global_chart(new_df)
