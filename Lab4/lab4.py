@@ -30,6 +30,11 @@ def write_statistics(df: pandas.DataFrame) -> None:
                   'mean_dev': ['min', 'max', 'median', 'mean']}))
 
 
+def filter_by_deviation(df: pandas.DataFrame, deviation: float or int) -> pandas.DataFrame:
+    return df[df['mean_dev'] >= deviation]
+
+
 if __name__ == '__main__':
     new_df = create_value_deviation_columns(rename_columns(read_data()))
     write_statistics(new_df)
+    print(filter_by_deviation(new_df, 2.37))
