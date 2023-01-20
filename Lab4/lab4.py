@@ -39,8 +39,13 @@ def filter_by_date(df: pandas.DataFrame, start_date: datetime.date, end_date: da
     return df.loc[df['date'].between(start_date, end_date)]
 
 
+def group_by_month(df: pandas.DataFrame) -> pandas.DataFrame:
+    return df.groupby(df['date'].dt.month)['value'].mean()
+
+
 if __name__ == '__main__':
     new_df = create_value_deviation_columns(rename_columns(read_data()))
     write_statistics(new_df)
     print(filter_by_deviation(new_df, 2.37))
     print(filter_by_date(new_df, datetime(2022, 10, 12), datetime(2022, 10, 14)))
+    print(group_by_month(new_df))
